@@ -2,10 +2,10 @@
 
 void Vector3::normalize()
 {
-	float length = getLength();
+	double length = getLength();
 	if (length == 1.0f || length == 0.0f)
 		return;
-	float scalefactor = 1.0 / length;
+	double scalefactor = 1.0 / length;
 	x *= scalefactor;
 	y *= scalefactor;
 	z *= scalefactor;

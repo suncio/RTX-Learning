@@ -18,7 +18,7 @@ public:
 	Vector3 getDirection() const { return m_direction; }
 
 	// p(t) = origin + t * dir;
-	Vector3 pointAt(const float& t) const { return m_origin + m_direction * t; }
+	Vector3 pointAt(const double& t) const { return m_origin + m_direction * t; }
 
 private:
 	Vector3 m_origin;
