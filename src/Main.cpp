@@ -70,8 +70,10 @@ HittableList random_scene()
 {
 	HittableList world;
 
-	auto ground_material = make_shared<Lambertian>(Color(0.5, 0.5, 0.5));
-	world.add(make_shared<Sphere>(Point3(0, -1000, 0), 1000, ground_material));
+	// auto ground_material = make_shared<Lambertian>(Color(0.5, 0.5, 0.5));
+	// world.add(make_shared<Sphere>(Point3(0, -1000, 0), 1000, ground_material));
+	auto checker = make_shared<CheckerTexture>(Color(0.2, 0.5, 0.3), Color(0.9, 0.9, 0.3));
+	world.add(make_shared<Sphere>(Point3(0, -1000, 0), 1000, make_shared<Lambertian>(checker)));
 
 	for (int a = -11; a < 11; a++) {
 		for (int b = -11; b < 11; b++) {
@@ -85,7 +87,8 @@ HittableList random_scene()
 					// diffuse
 					auto albedo = Color::random() * Color::random();
 					sphere_material = make_shared<Lambertian>(albedo);
-					world.add(make_shared<Sphere>(center, 0.2, sphere_material));
+					auto center2 = center + Vector3(0, random_double(0, 0.5), 0);
+					world.add(make_shared<MovingSphere>(center, center2, 0.0, 1.0, 0.2, sphere_material));
 				}
 				else if (choose_mat < 0.95) {
 					// metal
@@ -115,27 +118,74 @@ HittableList random_scene()
 	return world;
 }
 
+HittableList two_spheres()
+{
+	HittableList objects;
+
+	auto checker = make_shared<CheckerTexture>(Color(0.2, 0.5, 0.3), Color(0.9, 0.9, 0.3));
+
+	objects.add(make_shared<Sphere>(Point3(0, -10, 0), 10, make_shared<Lambertian>(checker)));
+	objects.add(make_shared<Sphere>(Point3(0,  10, 0), 10, make_shared<Lambertian>(checker)));
+
+	return objects;
+}
+
+HittableList earth()
+{
+	auto earth_texture = make_shared<ImageTexture>("../RayTracer/res/earthmap.jpg");
+	auto earth_surface = make_shared<Lambertian>(earth_texture);
+	auto globe = make_shared<Sphere>(Point3(0, 0, 0), 2, earth_surface);
+	
+	return HittableList(globe);
+}
+
 int main()
 {
 	// Image
 	const auto aspect_ratio = 16.0 / 9.0;
-	const int image_width = 1200;
+	const int image_width = 1600;
 	const int image_height = static_cast<int>(image_width / aspect_ratio);
-	const int samples_per_pixel = 10;
+	const int samples_per_pixel = 5;
 	const int max_depth = 50;
 
 	// World
-	auto world = random_scene();
+	HittableList world;
 
-	// Camera
-	Point3 lookfrom(13, 2, 3);
-	Point3 lookat(0, 0, 0);
+	Point3 lookfrom;
+	Point3 lookat;
+	auto vfov = 40.0;
+	auto aperture = 0.0;
+
+	switch (0)
+	{
+	case 1:
+		world = random_scene();
+		lookfrom = Point3(13, 2, 3);
+		lookat = Point3(0, 0, 0);
+		vfov = 20.0;
+		aperture = 0.1;
+		break;
+
+	case 2:
+		world = two_spheres();
+		lookfrom = Point3(13, 2, 3);
+		lookat = Point3(0, 0, 0);
+		vfov = 20.0;
+		break;
+
+	default:
+	case 4:
+		world = earth();
+		lookfrom = Point3(13, 2, 3);
+		lookat = Point3(0, 0, 0);
+		vfov = 20.0;
+		break;
+	}
+
 	Vector3 vup(0, 1, 0);
-	// focal_length = sqrt(width^2 + height^2) / ( 2*tan( 45/2 ) )
 	auto dist_to_focus = 10.0;
-	auto aperture = 0.1;
 
-	Camera cam(lookfrom, lookat, vup, 20, aspect_ratio, aperture, dist_to_focus);
+	Camera cam(lookfrom, lookat, vup, 20, aspect_ratio, aperture, dist_to_focus, 0.0, 1.0);
 	/*
 	auto viewport_height = 2.0;
 	auto viewport_width = aspect_ratio * viewport_height;

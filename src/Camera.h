@@ -13,7 +13,9 @@ public:
 		double  vfov,  // vertical field-of-view in degrees
 		double  aspect_ratio,
 		double  aperture,
-		double  focus_dist
+		double  focus_dist,
+		double t0 = 0, 
+		double t1 = 0
 	)
 	{
 		auto theta = degreeToRadian(vfov);
@@ -31,6 +33,8 @@ public:
 		m_lowerLeftCorner = m_origin - m_horizontal / 2.0 - m_vertical / 2.0 - focus_dist * w;
 
 		m_lens_radius = aperture / 2;
+		m_time0 = t0;
+		m_time1 = t1;
 	}
 
 	Ray getRay(double s, double t) const
@@ -39,7 +43,8 @@ public:
 		Vector3 offset = u * rd.x + v * rd.y;
 		return Ray(
 			m_origin + offset,
-			m_lowerLeftCorner + s * m_horizontal + t * m_vertical - m_origin - offset
+			m_lowerLeftCorner + s * m_horizontal + t * m_vertical - m_origin - offset,
+			random_double(m_time0, m_time1)
 		);
 	}
 
@@ -50,6 +55,7 @@ private:
 	Vector3 m_vertical;
 	Vector3 u, v, w;
 	double m_lens_radius;
+	double m_time0, m_time1; // shutter open/close time
 };
 
 #endif // !CAMERA_H

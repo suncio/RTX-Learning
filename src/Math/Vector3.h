@@ -1,6 +1,8 @@
 #ifndef VECTOR3_H
 #define VECTOR3_H
 
+#include <stdexcept>
+
 #include "MathUtils.h"
 
 class Vector3
@@ -60,6 +62,29 @@ public:
 
 	inline bool operator==(const Vector3& rhs) const { return (equal(x, rhs.x) && equal(y, rhs.y) && equal(z, rhs.z)); }
 	inline bool operator!=(const Vector3& rhs) const { return (!equal(x, rhs.x) || !equal(y, rhs.y) || !equal(z, rhs.z)); }
+
+	double& operator[](int index) 
+	{
+		try
+		{
+			switch (index)
+			{
+			case 0:
+				return x;
+			case 1:
+				return y;
+			case 2:
+				return z;
+			default:
+				throw std::out_of_range("Error: Vector3 index should be 0~2!");
+				break;
+			}
+		}
+		catch (const std::out_of_range& e)
+		{
+			std::cout << e.what() << std::endl;
+		}
+	}
 
 	// utility 
 	inline friend std::ostream& operator<<(std::ostream& os, const Vector3& v) 

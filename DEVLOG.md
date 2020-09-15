@@ -2,6 +2,25 @@
 
 
 
+##### 09/14/2020
+
+- "Ray Tracing The Next Week" Ongoing
+
+- Motion Blur
+
+  - Add time parameter to ray
+  - Moving sphere as Hittable
+
+- BVH
+
+- Solid Color Texture, Checker Texture & Image Texture
+
+  ![checker](./img/img_checker_two_spheres.png)
+
+  ![earth](./img/img_earth.png)
+
+
+
 ##### 09/10/2020
 
 - "Ray Tracing in One Weekend" Complete

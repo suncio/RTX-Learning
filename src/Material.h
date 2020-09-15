@@ -2,6 +2,7 @@
 #define MATERIAL_H
 
 #include "Hittable.h"
+#include "Texture.h"
 
 class Material
 {
@@ -12,13 +13,15 @@ public:
 class Lambertian : public Material
 {
 public:
-	Lambertian(const Color& a) : m_albedo(a) {}
+	Lambertian(const Color& a) : m_albedo(make_shared<SolidColor>(a)) {}
+	Lambertian(shared_ptr<Texture> a) : m_albedo(a) {}
+
 	virtual ~Lambertian() = default;
 
 	virtual bool scatter(const Ray& r_in, const HitRecord& rec, Color& attenuation, Ray& scattered) const override;
 
 private:
-	Color m_albedo;
+	shared_ptr<Texture> m_albedo;
 };
 
 class Metal : public Material
