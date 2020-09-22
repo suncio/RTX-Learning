@@ -9,7 +9,7 @@ public:
 	BVHNode() = default;
 
 	BVHNode(HittableList& list, double t0, double t1)
-		: BVHNode()
+		: BVHNode(list.m_list, 0, list.m_list.size(), t0, t1)
 	{}
 
 	BVHNode(std::vector<shared_ptr<Hittable>>& objects, size_t start, size_t end, double t0, double t1);

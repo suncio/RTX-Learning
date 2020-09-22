@@ -45,3 +45,10 @@ bool Dielectric::scatter(const Ray& r_in, const HitRecord& rec, Color& attenuati
 	scattered = Ray(rec.position, refracted);
 	return true;
 }
+
+bool Isotropic::scatter(const Ray& r_in, const HitRecord& rec, Color& attenuation, Ray& scattered) const
+{
+	scattered = Ray(rec.position, Vector3::randomInUnitSphere(), r_in.getTime());
+	attenuation = m_albedo->value(rec.u, rec.v, rec.position);
+	return true;
+}

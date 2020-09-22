@@ -8,6 +8,11 @@ class Material
 {
 public:
 	virtual bool scatter(const Ray& r_in, const HitRecord& rec, Color& attenuation, Ray& scattered) const = 0;
+
+	virtual Color emitted(double u, double v, const Point3& p) const 
+	{
+		return Color(0, 0, 0);
+	}
 };
 
 class Lambertian : public Material
@@ -54,6 +59,38 @@ private:
 		r0 = r0 * r0;
 		return r0 + (1.0 - r0) * pow((1.0 - cosine), 5.0);
 	}
+};
+
+class DiffuseLight : public Material
+{
+public:
+	DiffuseLight(shared_ptr<Texture> a) : m_emit(a) {}
+	DiffuseLight(Color c) : m_emit(make_shared<SolidColor>(c)) {}
+
+	virtual bool scatter(const Ray& r_in, const HitRecord& rec, Color& attenuation, Ray& scattered) const override
+	{
+		return false;
+	}
+
+	virtual Color emitted(double u, double v, const Point3& p) const override
+	{
+		return m_emit->value(u, v, p);
+	}
+
+public:
+	shared_ptr<Texture> m_emit;
+};
+
+class Isotropic : public Material
+{
+public:
+	Isotropic(Color c) : m_albedo(make_shared<SolidColor>(c)) {}
+	Isotropic(shared_ptr<Texture> a) : m_albedo(a) {}
+
+	virtual bool scatter(const Ray& r_in, const HitRecord& rec, Color& attenuation, Ray& scattered) const override;
+
+public:
+	shared_ptr<Texture> m_albedo;
 };
 
 #endif // !MATERIAL_H

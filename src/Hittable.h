@@ -36,6 +36,36 @@ public:
 	virtual bool boundingBox(const double t0, const double t1, AABB& outputBox) const = 0;
 };
 
+class Translate : public Hittable
+{
+public:
+	Translate(shared_ptr<Hittable> p, const Vector3& displacement)
+		: m_ptr(p), m_offset(displacement) {}
+
+	virtual bool hit(const Ray& r, const double& tmin, const double& tmax, HitRecord& rec) const override;
+	virtual bool boundingBox(const double t0, const double t1, AABB& outputBox) const override;
+
+public:
+	shared_ptr<Hittable> m_ptr;
+	Vector3 m_offset;
+};
+
+class RotateY : public Hittable
+{
+public:
+	RotateY(shared_ptr<Hittable> p, double angle);
+
+	virtual bool hit(const Ray& r, const double& tmin, const double& tmax, HitRecord& rec) const override;
+	virtual bool boundingBox(const double t0, const double t1, AABB& outputBox) const override;
+
+public:
+	shared_ptr<Hittable> m_ptr;
+	double m_sin_theta;
+	double m_cos_theta;
+	bool m_hasbox;
+	AABB m_bbox;
+};
+
 class Sphere : public Hittable
 {
 public:
@@ -81,6 +111,51 @@ public:
 	shared_ptr<Material> m_mat_ptr;
 };
 
+class XYRect : public Hittable
+{
+public:
+	XYRect() {}
+	XYRect(double _x0, double _x1, double _y0, double _y1, double _k, shared_ptr<Material> mat)
+		: m_x0(_x0), m_x1(_x1), m_y0(_y0), m_y1(_y1), m_k(_k), m_mat_ptr(mat) {};
+
+	virtual bool hit(const Ray& r, const double& tmin, const double& tmax, HitRecord& rec) const override;
+	virtual bool boundingBox(const double t0, const double t1, AABB& outputBox) const override;
+
+public:
+	double m_x0, m_x1, m_y0, m_y1, m_k;
+	shared_ptr<Material> m_mat_ptr;
+};
+
+class XZRect : public Hittable
+{
+public:
+	XZRect() {}
+	XZRect(double _x0, double _x1, double _z0, double _z1, double _k, shared_ptr<Material> mat)
+		: m_x0(_x0), m_x1(_x1), m_z0(_z0), m_z1(_z1), m_k(_k), m_mat_ptr(mat) {};
+
+	virtual bool hit(const Ray& r, const double& tmin, const double& tmax, HitRecord& rec) const override;
+	virtual bool boundingBox(const double t0, const double t1, AABB& outputBox) const override;
+
+public:
+	double m_x0, m_x1, m_z0, m_z1, m_k;
+	shared_ptr<Material> m_mat_ptr;
+};
+
+class YZRect : public Hittable
+{
+public:
+	YZRect() {}
+	YZRect(double _y0, double _y1, double _z0, double _z1, double _k, shared_ptr<Material> mat)
+		: m_y0(_y0), m_y1(_y1), m_z0(_z0), m_z1(_z1), m_k(_k), m_mat_ptr(mat) {};
+
+	virtual bool hit(const Ray& r, const double& tmin, const double& tmax, HitRecord& rec) const override;
+	virtual bool boundingBox(const double t0, const double t1, AABB& outputBox) const override;
+
+public:
+	double m_y0, m_y1, m_z0, m_z1, m_k;
+	shared_ptr<Material> m_mat_ptr;
+};
+
 class HittableList : public Hittable
 {
 public:
@@ -94,8 +169,23 @@ public:
 	virtual bool hit(const Ray& r, const double& tmin, const double& tmax, HitRecord& rec) const override;
 	virtual bool boundingBox(const double t0, const double t1, AABB& outputBox) const override;
 
-private:
+public:
 	std::vector<std::shared_ptr<Hittable>> m_list;
+};
+
+class Box : public Hittable
+{
+public:
+	Box() {}
+	Box(const Point3& p0, const Point3& p1, shared_ptr<Material> ptr);
+
+	virtual bool hit(const Ray& r, const double& tmin, const double& tmax, HitRecord& rec) const override;
+	virtual bool boundingBox(const double t0, const double t1, AABB& outputBox) const override;
+
+public:
+	Point3 m_min;
+	Point3 m_max;
+	HittableList m_sides;
 };
 
 #endif // !HITTABLE_H

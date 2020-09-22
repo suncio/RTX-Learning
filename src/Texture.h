@@ -2,6 +2,7 @@
 #define TEXTURE_H
 
 #include "Math/Vector3.h"
+#include "Perlin.h"
 
 class Texture
 {
@@ -50,6 +51,22 @@ public:
 public:
 	shared_ptr<Texture> m_odd;
 	shared_ptr<Texture> m_even;
+};
+
+class NoiseTexture : public Texture
+{
+public:
+	NoiseTexture() : m_scale(1.0) {}
+	NoiseTexture(double sc) : m_scale(sc) {}
+
+	virtual Color value(double u, double v, const Vector3& p) const override
+	{
+		return Color(1, 1, 1) * 0.5 * (1.0 + sin(m_scale * p.z + 10 * m_noise.turb(p)));
+	}
+
+public:
+	Perlin m_noise;
+	double m_scale;
 };
 
 class ImageTexture : public Texture
