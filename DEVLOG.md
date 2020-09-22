@@ -2,6 +2,36 @@
 
 
 
+##### 09/20/2020
+
+- Use stbi_write to write png image instead of using c++ std::cout to create ppm image
+
+- Use tbb for multi-thread rendering acceleration
+
+- Final scene with acceleration
+
+  ![Final Scene 2](./img/final_scene_parallel.png)
+
+
+
+##### 09/17/2020
+
+- "Ray Tracing The Next Week" Done
+- Rectangle Light
+
+- Noise Texture
+
+  ![rectangle light with noise texture](./img/img_rectangle_light.png)
+
+- Volume with Constant Density Mediums
+
+- Single thread raytracing is sinful, plan to use TBB to accelerate
+
+- Final Scene - Take days to render, so image may be demonstrated next time
+
+
+
+
 ##### 09/14/2020
 
 - "Ray Tracing The Next Week" Ongoing
