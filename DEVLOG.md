@@ -1,4 +1,25 @@
-# RTX-Learning Devlog
+# RayTracing-Learning Devlog
+
+##### 10/01/2020
+
+- Set up CUDA for visual studio
+  - CUDA v9.0
+  - https://docs.nvidia.com/nsight-visual-studio-edition/3.2/Content/CUDA_Properties_Config.htm
+  - Solve CUDA&Visual Studio version conflict: 
+    - https://stackoverflow.com/questions/47780355/cuda-compiling-error-after-installing-it
+    - https://dev.to/yumetodo/list-of-mscver-and-mscfullver-8nd
+  
+- Adjust Math headers for CUDA
+  
+  - CUDA is compatible with C++ and the Vector3 class will be used on both GPU & CPU, so we add **host device** as a qualifier to all methods.
+  
+- Ray class 
+
+  - \_\_device\_\_ qualifiers considering that it's only used on GPU
+
+- Reduce precision from **double** to **float**, unless you have NVIDIA's full implementation of GA100 GPU specifications :0
+
+  
 
 
 
@@ -11,6 +32,8 @@
 - Final scene with acceleration
 
   ![Final Scene 2](./img/final_scene_parallel.png)
+
+
 
 
 

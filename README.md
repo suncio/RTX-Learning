@@ -1,4 +1,4 @@
-# RTX-Learning
+# RayTracing-Learning
 
 #### Intro
 
@@ -6,13 +6,13 @@ This is a repo of my learning **Ray Tracing**, following
 
 - [Ray Tracing in One Weekend](https://github.com/petershirley/raytracinginoneweekend) (Complete)
 - [Ray Tracing the Next Week](https://github.com/petershirley/raytracingthenextweek) (Complete)
-- [Ray Tracing the Rest of Your Life](https://github.com/petershirley/raytracingtherestofyourlife) (Reading Not to Implement)
+- [Ray Tracing the Rest of Your Life](https://github.com/petershirley/raytracingtherestofyourlife) (Blocked by GPU)
 
 Next Step Plan:
 
 - TBB parallel (Complete)
-- Integrate with OpenGL for image showing (To do)
-- GPU raytracing (To do)
+- GPU raytracing (In Progress)
+- Integrate with OpenGL for image showing (To Do)
 
 
 
