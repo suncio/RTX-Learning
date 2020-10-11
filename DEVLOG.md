@@ -1,5 +1,17 @@
 # RayTracing-Learning Devlog
 
+##### 10/11/2020
+
+- Basic ray hit and write color function done
+
+  ![Hit Sphere](./img/hit_sphere_cuda.png)
+
+- Reading [libcudacxx]() for a **smart pointer** substitute, if none exists, we'll have to use **raw point** to manage memory and stuff
+
+
+
+
+
 ##### 10/01/2020
 
 - Set up CUDA for visual studio
