@@ -15,9 +15,11 @@ using std::sqrt;
 typedef unsigned int uint;
 
 // Constants
+#define M_PI 3.14159265358979323846
 const float tolerance = 1e-5;
 const float infinity = std::numeric_limits<float>::infinity();
 const float pi = 3.1415926535897932385;
+
 
 // Random Number Utilities
 inline float random_float()

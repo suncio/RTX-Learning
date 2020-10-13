@@ -20,6 +20,14 @@ For current progress, please read DEVLOG next to this README
 
 #### Structure
 
+```
+- res
+	- earthmap.jpg
+- src
+	- CPU
+	- GPU
+```
+
 
 
 

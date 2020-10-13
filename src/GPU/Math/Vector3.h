@@ -70,7 +70,7 @@ public:
 	__host__ __device__ void operator-=(const Vector3 &rhs) { x -= rhs.x; y -= rhs.y; z -= rhs.z; }
 	__host__ __device__ void operator*=(const float rhs) { x *= rhs; y *= rhs; z *= rhs; }
 	// void operator*=(const Vector3 &rhs) { x *= rhs.x; y *= rhs.y; z *= rhs.z; }
-	__host__ __device__ void operator/=(const float rhs) { if (!equal(rhs, 0.0f)) { x /= rhs; y /= rhs; z /= rhs; } }
+	// __host__ __device__ void operator/=(const float rhs) { if (!equal(rhs, 0.0f)) { x /= rhs; y /= rhs; z /= rhs; } }
 	// void operator/=(const Vector3 &rhs) { x /= rhs.x; y /= rhs.y; z /= rhs.z; }
 
 	__host__ __device__ Vector3 operator+() const { return * this; }

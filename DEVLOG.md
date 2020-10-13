@@ -1,5 +1,36 @@
 # RayTracing-Learning Devlog
 
+##### 10/15/2020
+
+- Material and final scene done
+
+- Final scene render using CUDA
+
+  ```powershell
+  $ nvprof.exe --print-gpu-trace .\RayTracer-GPU.exe
+  Rendering a 1200x600 image in 8x8 blocks.
+  ==2144== NVPROF is profiling process 2144, command: .\RayTracer-GPU.exe
+  took 0.003 seconds to init render random.
+  took 2400.76 seconds to render the image.
+  
+  Done.
+  ==2144== Profiling application: .\RayTracer-GPU.exe
+  ==2144== Profiling result:
+     Start  Duration            Grid Size      Block Size     Regs*    SSMem*    DSMem*           Device   Context    Stream        Unified Memory  Virtual Address  Name
+  291.07ms  34.848us              (1 1 1)         (1 1 1)        92        0B        0B  GeForce GTX 107         1         7                     -                -  rand_init(curandStateXORWOW*) [107]
+  292.44ms  61.221ms              (1 1 1)         (1 1 1)       119        0B        0B  GeForce GTX 107         1         7                     -                -  create_world(Hittable**, Hittable**, Camera**, int, int, curandStateXORWOW*) [120]
+  353.79ms  2.9074ms           (151 76 1)         (8 8 1)        97        0B        0B  GeForce GTX 107         1         7                     -                -  render_init(int, int, curandStateXORWOW*) [127]
+  357.41ms  2.4e+03s           (151 76 1)         (8 8 1)        48        0B        0B  GeForce GTX 107         1         7                     -                -  render(Vector3*, int, int, int, Camera**, Hittable**, curandStateXORWOW*) [138] 
+  
+  Regs: Number of registers used per CUDA thread. This number includes registers used internally by the CUDA driver and/or tools and can be more than what the compiler shows.
+  SSMem: Static shared memory allocated per CUDA block.
+  DSMem: Dynamic shared memory allocated per CUDA block.
+  ```
+
+  ![](./img/img_final_scene_cuda.png)
+
+
+
 ##### 10/12/2020
 
 - Hittable object : Sphere and HittableList
