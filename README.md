@@ -14,6 +14,8 @@ Next Step Plan:
 - GPU raytracing (In Progress)
 - Integrate with OpenGL for image showing (To Do)
 
+For current progress, please read DEVLOG next to this README
+
 
 
 #### Structure

@@ -1,5 +1,27 @@
 # RayTracing-Learning Devlog
 
+##### 10/12/2020
+
+- Hittable object : Sphere and HittableList
+
+- Memory management should be careful
+
+- Introduce **[cuRAND ](https://docs.nvidia.com/cuda/curand/index.html)library** for random numbers in CUDA
+
+  Note that we initialize `rand_state` for every thread and `curand_init` is very time costing. So for performance measurement, we may want to separate the time for random initialization from rendering time -> make a separate kernel.
+
+- Antialiasing
+
+- Recursion -> Iteration
+
+  In serial version code, we use recursion in `ray_clor` function, as we are now using CUDA, this behavior could easily cause an stack overflow since it can call itself many times. So we need translate recursion into iteration. 
+
+  For an elaborate description regarding iteration vs. recursion, please read SICP.
+
+- A reminder: for now we use `curand_uniform` for random number generate, and for future **Monte Carlo** method we may need to use something like `curand_normal`
+
+  
+
 ##### 10/11/2020
 
 - Basic ray hit and write color function done
@@ -29,7 +51,7 @@
 
   - \_\_device\_\_ qualifiers considering that it's only used on GPU
 
-- Reduce precision from **double** to **float**, unless you have NVIDIA's full implementation of GA100 GPU specifications :0
+- Reduce precision from **double** to **float**, unless you have a GPU with NVIDIA's full implementation of GA100 GPU specifications :0
 
   
 
